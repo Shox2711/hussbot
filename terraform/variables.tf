@@ -22,4 +22,6 @@ variable "acl_value" {
     default = "private"
 }
 
-variable ""
+variable "db_name" {
+    default = "hussbot-tf-locks"
+}
