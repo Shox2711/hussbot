@@ -1,0 +1,12 @@
+name: Terraform
+
+on: [push]
+
+jobs:
+  terraform_apply:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Verify Terraform version
+      run: |
+        echo "${{ secrets.AWS_ACCESS_KEY_ID }}"
