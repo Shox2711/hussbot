@@ -3,7 +3,8 @@ name: Terraform
 on: [push]
 
 jobs:
-  terraform_apply:
+  terraform:
+    name: 'Terraform'
     runs-on: ubuntu-latest
     steps:
     - name: "Setup - Build AWS Credentials"
@@ -16,15 +17,25 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
 
-
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
 
+    - name: Terraform format
+      working-directory: terraform
+
+      run: terraform fmt
+
     - name: Terraform init
+      working-directory: terraform
       run: terraform init -input=false
 
     - name: Terraform validation
+      working-directory: terraform
       run: terraform validate
 
     - name: Terraform apply
-      run: terraform apply -auto-approve -input=false
+      env:
+          CI: true
+          TF_VAR_public_key: ${{ secrets.PUBLIC_SSH_KEY }}
+      working-directory: terraform
+      run: pwd; ls -al; terraform apply -auto-approve -input=false

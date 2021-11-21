@@ -11,7 +11,7 @@ variable "instance_type" {
 }
 
 variable "public_key" {
-    default = "${{secrets.PUBLIC_SSH_KEY}}"
+    type = string
 }
 
 variable "bucket_name" {
